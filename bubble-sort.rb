@@ -1,19 +1,27 @@
-require 'pry'
-
 def bubble_sort(array)
-  array.map do
-    array.each_with_index do |item, index|
-      if index == array.size - 1 then
-        break
-      end
-      if item > array[index+1] then
-        array[index] = array[index+1]
+  new_array = []
+
+  until array.size == 1 do
+    swapped = false #set flag to see if array is already sorted
+    array.map.with_index do |item, index|
+      next if index+1 == array.size #proceed to next loop on last item
+      
+      next_item = array.at(index+1) 
+      if item > next_item then
+        array[index] = next_item
         array[index+1] = item
-        binding.pry
+        swapped = true
       end
     end
+
+    if swapped == false then #exit loop if remaining array is sorted
+      break
+    end
+
+    new_array.unshift(array.pop)
+
   end
-  p array
+  p array + new_array
 end
 
 bubble_sort([4,3,78,2,0,2])
